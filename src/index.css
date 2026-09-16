@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-canvas: #f4f6f8;
+  --color-ink: #0a0e13;
+  --color-panel-dark: #10161d;
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.5s ease both;
+  --animate-tick: tick 2s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes tick {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-slate-800 antialiased font-sans;
+  text-rendering: optimizeLegibility;
+}
+
+.dark body {
+  @apply bg-ink text-slate-200;
+}
+
+::selection {
+  background: rgba(16, 185, 129, 0.25);
+}
+
+/* ---- scrollbars ---- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.35) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ---- recharts polish ---- */
+.recharts-wrapper *,
+.recharts-surface * {
+  outline: none !important;
+}
+.recharts-cartesian-axis-tick text {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+}
+.recharts-tooltip-wrapper {
+  transition: transform 0.12s ease-out, opacity 0.15s ease;
+}
+
+/* ---- numeric tabular ---- */
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ---- date brush handles ---- */
+.brush-grab {
+  cursor: grab;
+  touch-action: none;
+}
+.brush-grab:active {
+  cursor: grabbing;
+}
+.brush-ew {
+  cursor: ew-resize;
+  touch-action: none;
+}
